@@ -1,7 +1,2 @@
-images/*
-testing_images/*
-training_images/*
-training_videos/*
-testing_videos/*
-
+*
 !.gitignore

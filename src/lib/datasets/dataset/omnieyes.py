@@ -22,6 +22,8 @@ class OmniEyes(data.Dataset):
     super(OmniEyes, self).__init__()
     self.data_dir = os.path.join(opt.data_dir, 'omnieyes')
     self.img_dir = os.path.join(self.data_dir, 'images')
+    # print(split)
+    # exit()
     if split == 'val':
       self.annot_path = os.path.join(
           self.data_dir, 'annotations', 
@@ -31,6 +33,10 @@ class OmniEyes(data.Dataset):
         self.annot_path = os.path.join(
           self.data_dir, 'annotations', 
           'omnieyes_train.json')
+      if split == 'test':
+          self.annot_path = os.path.join(
+          self.data_dir, 'annotations', 
+          'omnieyes_test.json')
       else:
         self.annot_path = os.path.join(
           self.data_dir, 'annotations', 
@@ -47,7 +53,7 @@ class OmniEyes(data.Dataset):
       'traffic_light_complex',
       'traffic_light_green',
       'traffic_light_red']
-    self._valid_ids = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    self._valid_ids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     self.cat_ids = {v: i for i, v in enumerate(self._valid_ids)}
     self.voc_color = [(v // 32 * 64 + 64, (v // 8) % 4 * 64, v % 8 * 32) \
                       for v in range(1, self.num_classes + 1)]

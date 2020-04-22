@@ -44,10 +44,29 @@ conda activate CenterNet
 
 cd ../../src
 
-python main.py ctdet --exp_id omnieyes_res_18 --batch_size 32 --master_batch 1 --lr 1.25e-4  --gpus 0 --arch res_18 --head_conv 64 --num_epochs 100
+python main.py ctdet --exp_id omnieyes_res_18 --batch_size 32 --master_batch 1 --lr 1.25e-4  --gpus 0 --arch res_18 --head_conv 64 --num_epochs 200
 
-python main.py ctdet --exp_id omnieyes_dla --batch_size 16 --master_batch 1 --lr 1.25e-4  --gpus 0 --num_epochs 100
+python test.py --exp_id omnieyes_res_18 --not_prefetch_test ctdet --load_model /home/omnieyes/renjie/GitHub/CenterNet/exp/ctdet/omnieyes_res_18/model_best.pth --arch res_18 --head_conv 64
 
-python test.py --exp_id omnieyes_res_18 --not_prefetch_test ctdet --load_model /home/omnieyes/renjie/GitHub/CenterNet/exp/ctdet/omnieyes_res_18/model_best.pth
+#python main.py ctdet --exp_id omnieyes_dla --batch_size 16 --master_batch 1 --lr 1.25e-4  --gpus 0 --num_epochs 200
 
-python test.py --exp_id omnieyes_dla --not_prefetch_test ctdet --load_model /home/omnieyes/renjie/GitHub/CenterNet/exp/ctdet/omnieyes_dla/model_best.pth
+#python test.py --exp_id omnieyes_dla --not_prefetch_test ctdet --load_model /home/omnieyes/renjie/GitHub/CenterNet/exp/ctdet/omnieyes_dla/model_best.pth --test
+
+
+
+# run /home/omnieyes/renjie/GitHub/CenterNet/src/result_to_tfrecord.ipynb
+
+# export PYTHONPATH=$PYTHONPATH:/home/omnieyes/renjie/TF_models/research:/home/omnieyes/renjie/TF_models/research/slim
+
+# cd /home/omnieyes/renjie/OmniEyes_forOD/OmniEyes
+# git checkout master
+
+# python data_post_processing/inspect_record.py /home/omnieyes/renjie/GitHub/CenterNet/exp/ctdet/omnieyes_res_18/ \
+# -s 0.5 \
+# -i 0.5 \
+# -o /home/omnieyes/renjie/GitHub/CenterNet/exp/ctdet/omnieyes_res_18/
+
+# python data_post_processing/inspect_record.py /home/omnieyes/renjie/GitHub/CenterNet/exp/ctdet/omnieyes_dla/ \
+# -s 0.5 \
+# -i 0.5 \
+# -o /home/omnieyes/renjie/GitHub/CenterNet/exp/ctdet/omnieyes_dla/

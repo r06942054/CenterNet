@@ -28,9 +28,10 @@ class CtdetDetector(BaseDetector):
   def process(self, images, return_time=False):
     with torch.no_grad():
       output = self.model(images)[-1]
-      hm = output['hm'].sigmoid_()
-      wh = output['wh']
-      reg = output['reg'] if self.opt.reg_offset else None
+      # output sequence is [hm, wh, reg]
+      hm = output[0].sigmoid_()
+      wh = output[1]
+      reg = output[2] if self.opt.reg_offset else None
       if self.opt.flip_test:
         hm = (hm[0:1] + flip_tensor(hm[1:2])) / 2
         wh = (wh[0:1] + flip_tensor(wh[1:2])) / 2

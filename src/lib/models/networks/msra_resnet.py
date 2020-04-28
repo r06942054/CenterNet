@@ -220,9 +220,14 @@ class PoseResNet(nn.Module):
         x = self.layer4(x)
 
         x = self.deconv_layers(x)
-        ret = {}
+        # ret = {}
+        # for head in self.heads:
+        #     ret[head] = self.__getattr__(head)(x)
+        # return [ret]
+        ret = []
+        # ret = [hm, wh, reg]
         for head in self.heads:
-            ret[head] = self.__getattr__(head)(x)
+            ret.append(self.__getattr__(head)(x))
         return [ret]
 
     def init_weights(self, num_layers, pretrained=True):

@@ -30,41 +30,42 @@ class CtdetLoss(torch.nn.Module):
     hm_loss, wh_loss, off_loss = 0, 0, 0
     for s in range(opt.num_stacks):
       output = outputs[s]
+      # output sequence is [hm, wh, reg]
       if not opt.mse_loss:
-        output['hm'] = _sigmoid(output['hm'])
+        output[0] = _sigmoid(output[0])
 
       if opt.eval_oracle_hm:
-        output['hm'] = batch['hm']
+        output[0] = batch['hm']
       if opt.eval_oracle_wh:
-        output['wh'] = torch.from_numpy(gen_oracle_map(
+        output[1] = torch.from_numpy(gen_oracle_map(
           batch['wh'].detach().cpu().numpy(), 
           batch['ind'].detach().cpu().numpy(), 
-          output['wh'].shape[3], output['wh'].shape[2])).to(opt.device)
+          output[1].shape[3], output[1].shape[2])).to(opt.device)
       if opt.eval_oracle_offset:
-        output['reg'] = torch.from_numpy(gen_oracle_map(
+        output[2] = torch.from_numpy(gen_oracle_map(
           batch['reg'].detach().cpu().numpy(), 
           batch['ind'].detach().cpu().numpy(), 
-          output['reg'].shape[3], output['reg'].shape[2])).to(opt.device)
+          output[2].shape[3], output[2].shape[2])).to(opt.device)
 
-      hm_loss += self.crit(output['hm'], batch['hm']) / opt.num_stacks
+      hm_loss += self.crit(output[0], batch['hm']) / opt.num_stacks
       if opt.wh_weight > 0:
         if opt.dense_wh:
           mask_weight = batch['dense_wh_mask'].sum() + 1e-4
           wh_loss += (
-            self.crit_wh(output['wh'] * batch['dense_wh_mask'],
+            self.crit_wh(output[1] * batch['dense_wh_mask'],
             batch['dense_wh'] * batch['dense_wh_mask']) / 
             mask_weight) / opt.num_stacks
         elif opt.cat_spec_wh:
           wh_loss += self.crit_wh(
-            output['wh'], batch['cat_spec_mask'],
+            output[1], batch['cat_spec_mask'],
             batch['ind'], batch['cat_spec_wh']) / opt.num_stacks
         else:
           wh_loss += self.crit_reg(
-            output['wh'], batch['reg_mask'],
+            output[1], batch['reg_mask'],
             batch['ind'], batch['wh']) / opt.num_stacks
       
       if opt.reg_offset and opt.off_weight > 0:
-        off_loss += self.crit_reg(output['reg'], batch['reg_mask'],
+        off_loss += self.crit_reg(output[2], batch['reg_mask'],
                              batch['ind'], batch['reg']) / opt.num_stacks
         
     loss = opt.hm_weight * hm_loss + opt.wh_weight * wh_loss + \

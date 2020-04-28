@@ -44,15 +44,17 @@ conda activate CenterNet
 
 cd ../../src
 
+# res_18
 python main.py ctdet --exp_id omnieyes_res_18 --batch_size 32 --master_batch 1 --lr 1.25e-4  --gpus 0 --arch res_18 --head_conv 64 --num_epochs 200
-
 python test.py --exp_id omnieyes_res_18 --not_prefetch_test ctdet --load_model /home/omnieyes/renjie/GitHub/CenterNet/exp/ctdet/omnieyes_res_18/model_best.pth --arch res_18 --head_conv 64
 
+# dla_34
 # python main.py ctdet --exp_id omnieyes_dla --batch_size 16 --master_batch 1 --lr 1.25e-4  --gpus 0 --num_epochs 200
-
 # python test.py --exp_id omnieyes_dla --not_prefetch_test ctdet --load_model /home/omnieyes/renjie/GitHub/CenterNet/exp/ctdet/omnieyes_dla/model_best.pth
 
-
+# mobilenetv3
+python main.py ctdet --exp_id omnieyes_mobilenetv3 --batch_size 16 --master_batch 1 --lr 1.25e-4  --gpus 0 --arch mobilenetv3 --head_conv 64 --num_epochs 200
+python test.py --exp_id omnieyes_mobilenetv3 --not_prefetch_test ctdet --load_model /home/omnieyes/renjie/GitHub/CenterNet/exp/ctdet/omnieyes_mobilenetv3/model_best.pth --arch mobilenetv3 --head_conv 64
 
 # run /home/omnieyes/renjie/GitHub/CenterNet/src/result_to_tfrecord.ipynb
 

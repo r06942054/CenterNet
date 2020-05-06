@@ -72,7 +72,7 @@ class Block(nn.Module):
 class MobileNetV3(nn.Module):
     def __init__(self, heads, head_conv):
         self.heads = heads
-        self.inplanes = 64
+        self.inplanes = 256
         self.deconv_with_bias = False
 
         super(MobileNetV3, self).__init__()
@@ -103,8 +103,8 @@ class MobileNetV3(nn.Module):
             Block(5, 160, 672, 160, hswish(), SeModule(160), 2),
             Block(5, 160, 960, 160, hswish(), SeModule(160), 1),
         )
-        self.conv2 = nn.Conv2d(160, 64, kernel_size=1, stride=1, padding=0, bias=False)
-        self.bn2 = nn.BatchNorm2d(64)
+        self.conv2 = nn.Conv2d(160, 256, kernel_size=1, stride=1, padding=0, bias=False)
+        self.bn2 = nn.BatchNorm2d(256)
         self.hs2 = hswish()
 
         # used for deconv layers

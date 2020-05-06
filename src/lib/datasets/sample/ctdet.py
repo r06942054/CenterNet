@@ -34,7 +34,15 @@ class CTDetDataset(data.Dataset):
     anns = self.coco.loadAnns(ids=ann_ids)
     num_objs = min(len(anns), self.max_objs)
 
+    # print("1")
+    # print('file_name: ', file_name)
+    # print("2")
     img = cv2.imread(img_path)
+    # print(img.shape)
+    img = cv2.resize(img, (800, 480), interpolation=cv2.INTER_LINEAR)
+    # print(img.shape)
+    # print("3")
+    # cv2.imwrite('/home/omnieyes/renjie/GitHub/CenterNet/preprocess_images/{}_before.jpg'.format(file_name.split('.')[0]), img)
 
     height, width = img.shape[0], img.shape[1]
     c = np.array([img.shape[1] / 2., img.shape[0] / 2.], dtype=np.float32)
@@ -47,24 +55,24 @@ class CTDetDataset(data.Dataset):
       input_h, input_w = self.opt.input_h, self.opt.input_w
     
     flipped = False
-    if self.split == 'train':
-      if not self.opt.not_rand_crop:
-        s = s * np.random.choice(np.arange(0.6, 1.4, 0.1))
-        w_border = self._get_border(128, img.shape[1])
-        h_border = self._get_border(128, img.shape[0])
-        c[0] = np.random.randint(low=w_border, high=img.shape[1] - w_border)
-        c[1] = np.random.randint(low=h_border, high=img.shape[0] - h_border)
-      else:
-        sf = self.opt.scale
-        cf = self.opt.shift
-        c[0] += s * np.clip(np.random.randn()*cf, -2*cf, 2*cf)
-        c[1] += s * np.clip(np.random.randn()*cf, -2*cf, 2*cf)
-        s = s * np.clip(np.random.randn()*sf + 1, 1 - sf, 1 + sf)
+    # if self.split == 'train':
+    #   if not self.opt.not_rand_crop:
+    #     s = s * np.random.choice(np.arange(0.6, 1.4, 0.1))
+    #     w_border = self._get_border(128, img.shape[1])
+    #     h_border = self._get_border(128, img.shape[0])
+    #     c[0] = np.random.randint(low=w_border, high=img.shape[1] - w_border)
+    #     c[1] = np.random.randint(low=h_border, high=img.shape[0] - h_border)
+    #   else:
+    #     sf = self.opt.scale
+    #     cf = self.opt.shift
+    #     c[0] += s * np.clip(np.random.randn()*cf, -2*cf, 2*cf)
+    #     c[1] += s * np.clip(np.random.randn()*cf, -2*cf, 2*cf)
+    #     s = s * np.clip(np.random.randn()*sf + 1, 1 - sf, 1 + sf)
       
-      if np.random.random() < self.opt.flip:
-        flipped = True
-        img = img[:, ::-1, :]
-        c[0] =  width - c[0] - 1
+    #   if np.random.random() < self.opt.flip:
+    #     flipped = True
+    #     img = img[:, ::-1, :]
+    #     c[0] =  width - c[0] - 1
         
 
     trans_input = get_affine_transform(
@@ -72,6 +80,10 @@ class CTDetDataset(data.Dataset):
     inp = cv2.warpAffine(img, trans_input, 
                          (input_w, input_h),
                          flags=cv2.INTER_LINEAR)
+    # print("4")
+    # cv2.imwrite('/home/omnieyes/renjie/GitHub/CenterNet/preprocess_images/{}_after.jpg'.format(file_name.split('.')[0]), inp)
+    # print("5")
+    # exit()
     inp = (inp.astype(np.float32) / 255.)
     if self.split == 'train' and not self.opt.no_color_aug:
       color_aug(self._data_rng, inp, self._eig_val, self._eig_vec)

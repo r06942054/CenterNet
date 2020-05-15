@@ -39,7 +39,7 @@ class CTDetDataset(data.Dataset):
     # print("2")
     img = cv2.imread(img_path)
     # print(img.shape)
-    img = cv2.resize(img, (800, 480), interpolation=cv2.INTER_LINEAR)
+    # img = cv2.resize(img, (800, 480), interpolation=cv2.INTER_LINEAR)
     # print(img.shape)
     # print("3")
     # cv2.imwrite('/home/omnieyes/renjie/GitHub/CenterNet/preprocess_images/{}_before.jpg'.format(file_name.split('.')[0]), img)

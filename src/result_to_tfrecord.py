@@ -3,6 +3,7 @@ import json
 import numpy as np
 import argparse
 
+sys.path.append("/home/omnieyes/renjie/TF_models/research/")
 from object_detection.core.standard_fields import TfExampleFields
 import sys
 sys.path.append("/home/omnieyes/renjie/OmniEyes_forOD/OmniEyes/")

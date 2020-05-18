@@ -2,6 +2,7 @@ import tensorflow as tf
 import json
 import numpy as np
 import argparse
+import sys
 
 sys.path.append("/home/omnieyes/renjie/TF_models/research/")
 from object_detection.core.standard_fields import TfExampleFields

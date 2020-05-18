@@ -53,8 +53,8 @@ python test.py --exp_id omnieyes_res_18 --not_prefetch_test ctdet --load_model /
 # python test.py --exp_id omnieyes_dla --not_prefetch_test ctdet --load_model /home/omnieyes/renjie/GitHub/CenterNet/exp/ctdet/omnieyes_dla/model_best.pth
 
 # mobilenetv3
-python main.py ctdet --exp_id omnieyes_mobilenetv3_2 --batch_size 16 --master_batch 1 --lr 1.25e-4  --gpus 0 --arch mobilenetv3 --head_conv 64 --num_epochs 200 --input_h 480 --input_w 800 --flip 0 --no_color_aug
-python test.py --exp_id omnieyes_mobilenetv3_2 --not_prefetch_test ctdet --load_model /home/omnieyes/renjie/GitHub/CenterNet/exp/ctdet/omnieyes_mobilenetv3/model_best.pth --arch mobilenetv3 --head_conv 64 --input_h 480 --input_w 800 --flip 0 --no_color_aug
+python main.py ctdet --exp_id omnieyes_mobilenetv3 --batch_size 8 --master_batch 1 --lr 1.25e-4  --gpus 0 --arch mobilenetv3 --head_conv 64 --num_epochs 200 --input_h 480 --input_w 800 --flip 0 --no_color_aug
+python test.py --exp_id omnieyes_mobilenetv3 --not_prefetch_test ctdet --load_model /home/omnieyes/renjie/GitHub/CenterNet/exp/ctdet/omnieyes_mobilenetv3/model_best.pth --arch mobilenetv3 --head_conv 64 --input_h 480 --input_w 800 --flip 0 --no_color_aug
 
 # mobilenetv3_2
 python main.py ctdet --exp_id omnieyes_mobilenetv3_2 --batch_size 16 --master_batch 1 --lr 1.25e-4  --gpus 0 --arch mobilenetv3 --head_conv 64 --num_epochs 200 --input_h 480 --input_w 800 --flip 0 --no_color_aug

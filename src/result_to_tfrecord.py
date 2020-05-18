@@ -16,6 +16,8 @@ parser.add_argument('-gt', '--gt-json-path', help='Path to GT json file.')
 parser.add_argument('-rt', '--result-json-path', help='Path to result json file.')
 parser.add_argument('-o', '--output-path', help='Path to output tfrecord file.')
 
+args = parser.parse_args()
+
 gt_json_path = args.gt_json_path
 result_json_path = args.result_json_path
 output_path = args.output_path

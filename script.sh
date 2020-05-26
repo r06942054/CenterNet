@@ -53,7 +53,7 @@ python result_to_tfrecord.py \
 -rt /home/omnieyes/renjie/GitHub/CenterNet/exp/ctdet/omnieyes_res_18/results.json \
 -o /home/omnieyes/renjie/GitHub/CenterNet/exp/ctdet/omnieyes_res_18/results_test.record
 
-cd /home/omnieyes/renjieOmniEyes_forOD/OmniEyes
+cd /home/omnieyes/renjie/OmniEyes_forOD/OmniEyes
 python data_post_processing/inspect_record.py \
 /home/omnieyes/renjie/GitHub/CenterNet/exp/ctdet/omnieyes_res_18/ \
 -s 0.5 \
@@ -92,8 +92,8 @@ conda activate CenterNet
 cd /home/omnieyes/renjie/GitHub/CenterNet/src/
 
 # res_18 with raw data + Gaussian
-python main.py ctdet --exp_id omnieyes_res_18_gau --batch_size 16 --master_batch 1 --lr 1.25e-4  --gpus 0 --arch res_18 --head_conv 64 --num_epochs 200 --input_h 480 --input_w 800 --flip 0 --no_color_aug
-python test.py --exp_id omnieyes_res_18_gau --not_prefetch_test ctdet --load_model /home/omnieyes/renjie/GitHub/CenterNet/exp/ctdet/omnieyes_res_18_gau/model_best.pth --arch res_18 --head_conv 64 --input_h 480 --input_w 800
+# python main.py ctdet --exp_id omnieyes_res_18_gau --batch_size 16 --master_batch 1 --lr 1.25e-4  --gpus 0 --arch res_18 --head_conv 64 --num_epochs 200 --input_h 480 --input_w 800 --flip 0 --no_color_aug
+# python test.py --exp_id omnieyes_res_18_gau --not_prefetch_test ctdet --load_model /home/omnieyes/renjie/GitHub/CenterNet/exp/ctdet/omnieyes_res_18_gau/model_best.pth --arch res_18 --head_conv 64 --input_h 480 --input_w 800
 
 export PYTHONPATH=$PYTHONPATH:/home/omnieyes/renjie/TF_models/research/
 python result_to_tfrecord.py \
@@ -101,7 +101,7 @@ python result_to_tfrecord.py \
 -rt /home/omnieyes/renjie/GitHub/CenterNet/exp/ctdet/omnieyes_res_18_gau/results.json \
 -o /home/omnieyes/renjie/GitHub/CenterNet/exp/ctdet/omnieyes_res_18_gau/results_test.record
 
-cd /home/omnieyes/renjieOmniEyes_forOD/OmniEyes
+cd /home/omnieyes/renjie/OmniEyes_forOD/OmniEyes
 python data_post_processing/inspect_record.py \
 /home/omnieyes/renjie/GitHub/CenterNet/exp/ctdet/omnieyes_res_18_gau/ \
 -s 0.5 \
@@ -114,7 +114,10 @@ conda activate CenterNet
 cd /home/omnieyes/renjie/GitHub/CenterNet/src/
 
 # mobilenetv3 with raw data + Gaussian
+set +e
 python main.py ctdet --exp_id omnieyes_mobilenetv3_gau --batch_size 8 --master_batch 1 --lr 1.25e-4  --gpus 0 --arch mobilenetv3 --head_conv 64 --num_epochs 200 --input_h 480 --input_w 800 --flip 0 --no_color_aug
+set -e
+
 python test.py --exp_id omnieyes_mobilenetv3_gau --not_prefetch_test ctdet --load_model /home/omnieyes/renjie/GitHub/CenterNet/exp/ctdet/omnieyes_mobilenetv3_gau/model_best.pth --arch mobilenetv3 --head_conv 64 --input_h 480 --input_w 800 --flip 0 --no_color_aug
 export PYTHONPATH=$PYTHONPATH:/home/omnieyes/renjie/TF_models/research/
 python result_to_tfrecord.py \
@@ -147,7 +150,7 @@ python data_post_processing/inspect_record.py \
 #安裝必須是conda install pytorch=0.4.1 cuda92 torchvision -c pytorch
 
 # on 550
-rsync -avrh /home/omnieyes/renjie/GitHub/CenterNet/data omnieyes@211.23.144.72:/home/omnieyes/renjie/GitHub/CenterNet
+#rsync -avrh /home/omnieyes/renjie/GitHub/CenterNet/data omnieyes@211.23.144.72:/home/omnieyes/renjie/GitHub/CenterNet
 
 # on 211.23.144.72
-rsync -avrh /home/omnieyes/renjie/GitHub/CenterNet/data omnieyes@192.168.0.24:/home/omnieyes/renjie/GitHub/CenterNet
+# rsync -avrh /home/omnieyes/renjie/GitHub/CenterNet/data omnieyes@192.168.0.24:/home/omnieyes/renjie/GitHub/CenterNet
